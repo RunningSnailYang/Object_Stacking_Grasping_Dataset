@@ -17,7 +17,7 @@ if not os.path.exists(datasets_dir):
     os.mkdir(datasets_dir)
 if os.path.exists('tmp'):
     shutil.rmtree('tmp', True)
-    os.mkdir('tmp')
+os.mkdir('tmp')
 start_idx = 7000
 scenario_names = os.listdir(scenario_dir)
 
