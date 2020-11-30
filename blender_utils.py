@@ -360,12 +360,12 @@ def get_bboxes_and_grasps2(scene, cam_ob, objs, grasps, tmp_dir):
                 inter_num = int(max(len_x, len_y))
                 grasp_line = np.array([np.linspace(grasp_p1[0], grasp_p2[0], inter_num),
                                            np.linspace(grasp_p1[1], grasp_p2[1], inter_num)]).astype(np.int)
-                line_l = grasp_line[:, :(inter_num / 3)]
-                line_m = grasp_line[:, (inter_num / 3):(2 * inter_num / 3)]
-                line_r = grasp_line[:, (2 * inter_num / 3):]
+                line_l = grasp_line[:, :int(inter_num / 3)]
+                line_m = grasp_line[:, int(inter_num / 3):int(2 * inter_num / 3)]
+                line_r = grasp_line[:, int(2 * inter_num / 3):]
       
-                line_l2 = grasp_line[:, :(inter_num / 2)]
-                line_r2 = grasp_line[:, (inter_num / 2):]
+                line_l2 = grasp_line[:, :int(inter_num / 2)]
+                line_r2 = grasp_line[:, int(inter_num / 2):]
                 if Img[center_y, center_x] > 150:
                     condition = (((Img[line_l2[1], line_l2[0]] < 91) * (Img[line_l2[1], line_l2[0]] > 87)).sum() / float(line_l2.shape[1]) > 0.5 and \
                                 ((1 - (Img[line_r2[1], line_r2[0]] < 91) * (Img[line_r2[1], line_r2[0]] > 87)).sum()) / float(line_r2.shape[1]) > 0.5) or \
@@ -380,9 +380,9 @@ def get_bboxes_and_grasps2(scene, cam_ob, objs, grasps, tmp_dir):
                     inter_num = int(max(len_x, len_y))
                     grasp_line = np.array([np.linspace(grasp_p1[0], grasp_p2[0], inter_num),
                                            np.linspace(grasp_p1[1], grasp_p2[1], inter_num)]).astype(np.int)
-                    line_l = grasp_line[:, :(inter_num / 3)]
-                    line_m = grasp_line[:, (inter_num / 3):(2 * inter_num / 3)]
-                    line_r = grasp_line[:, (2 * inter_num / 3):]
+                    line_l = grasp_line[:, :int(inter_num / 3)]
+                    line_m = grasp_line[:, int(inter_num / 3):int(2 * inter_num / 3)]
+                    line_r = grasp_line[:, int(2 * inter_num / 3):]
                     condition = ((Img[grasp_line[1], grasp_line[0]] < 91) * (Img[grasp_line[1], grasp_line[0]] > 87)).sum() / float(grasp_line.shape[1]) < 0.04 and \
                                 (Img[line_l[1], line_l[0]] == 255).sum() > 5 and (Img[line_r[1], line_r[0]] == 255).sum() > 5
                     if condition:

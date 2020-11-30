@@ -44,13 +44,13 @@ def add_noise_s(Img, Mask):
     mean = 0
     sigma = 0.0165
     for i in range(3):
-        gauss = np.random.normal(mean,sigma,(row * 2 / 5,col * 2 / 5))
-        gauss = gauss.reshape(row * 2 / 5, col * 2 / 5)
+        gauss = np.random.normal(mean,sigma,(row * 2 // 5,col * 2 // 5))
+        gauss = gauss.reshape(row * 2 // 5, col * 2 // 5)
         gauss = cv2.GaussianBlur(gauss, (kernel_size, kernel_size), 0)
         gauss = cv2.resize(gauss, (col, row), interpolation=cv2.INTER_CUBIC)
 
-        gauss_edge = np.random.normal(0.015 ,sigma,(row * 2 / 5,col * 2 / 5))
-        gauss_edge = gauss_edge.reshape(row * 2 / 5, col * 2 / 5)
+        gauss_edge = np.random.normal(0.015 ,sigma,(row * 2 // 5,col * 2 // 5))
+        gauss_edge = gauss_edge.reshape(row * 2 // 5, col * 2 // 5)
         gauss_edge = cv2.GaussianBlur(gauss_edge, (kernel_size, kernel_size), 0)
         gauss_edge = cv2.resize(gauss_edge, (col, row), interpolation=cv2.INTER_CUBIC)
 
@@ -79,21 +79,16 @@ def add_noise(Img, Mask):
     for i in range(3):  
         Masks_Mask[coors[i, 0]:coors[i, 0]+edge_mask_size, coors[i, 1]:coors[i, 1]+edge_mask_size] = 1
     edge_mask = (edge * Masks_Mask) > 0
-    '''
-    f = open('ss.txt', 'a')
-    f.write('edge' + str(edge.sum()) + '\n')
-    f.write('Masks_Mask' + str(Masks_Mask.sum()) + '\n')
-    '''
     mean = 0
     sigma = 0.0165
     for i in range(3):
-        gauss = np.random.normal(mean,sigma,(row * 2 / 5,col * 2 / 5))
-        gauss = gauss.reshape(row * 2 / 5, col * 2 / 5)
+        gauss = np.random.normal(mean,sigma,(row * 2 // 5,col * 2 // 5))
+        gauss = gauss.reshape(row * 2 // 5, col * 2 // 5)
         gauss = cv2.GaussianBlur(gauss, (kernel_size, kernel_size), 0)
         gauss = cv2.resize(gauss, (col, row), interpolation=cv2.INTER_CUBIC)
 
-        gauss_edge = np.random.normal(0.015 ,sigma,(row * 2 / 5,col * 2 / 5))
-        gauss_edge = gauss_edge.reshape(row * 2 / 5, col * 2 / 5)
+        gauss_edge = np.random.normal(0.015 ,sigma,(row * 2 // 5,col * 2 // 5))
+        gauss_edge = gauss_edge.reshape(row * 2 // 5, col * 2 // 5)
         gauss_edge = cv2.GaussianBlur(gauss_edge, (kernel_size, kernel_size), 0)
         gauss_edge = cv2.resize(gauss_edge, (col, row), interpolation=cv2.INTER_CUBIC)
 
@@ -101,26 +96,20 @@ def add_noise(Img, Mask):
         gauss_edge = cv2.GaussianBlur(gauss_edge, (kernel_size, kernel_size), 0)
         gauss_edge = cv2.GaussianBlur(gauss_edge, (kernel_size, kernel_size), 0)
         gauss_edge = cv2.GaussianBlur(gauss_edge, (kernel_size, kernel_size), 0)
-        # f.write('Masks_Mask' + str(Masks_Mask.sum()) + '\n')
         Img = Img + gauss + gauss_edge
         Img = np.clip(Img, 0, 255)
         Img = cv2.GaussianBlur(Img, (kernel_size, kernel_size), 0)
 
     kernel = np.ones((kernel_size,kernel_size),np.uint8)
 
-    '''
-    f = open('ss.txt', 'a')
-    f.write('edge' + str(edge.sum()) + '\n')
-    f.write('Masks_Mask' + str(Masks_Mask.sum()) + '\n')
-    '''
     mean = 0
     sigma = 0.0165
     Img = cv2.blur(Img, (7, 7))
     Img = cv2.blur(Img, (7, 7))
     Img = cv2.blur(Img, (5, 5))
     for i in range(3):
-        gauss = np.random.normal(mean,sigma,(row * 2 / 5,col * 2 / 5))
-        gauss = gauss.reshape(row * 2 / 5, col * 2 / 5)
+        gauss = np.random.normal(mean,sigma,(row * 2 // 5,col * 2 // 5))
+        gauss = gauss.reshape(row * 2 // 5, col * 2 // 5)
         gauss = cv2.GaussianBlur(gauss, (kernel_size, kernel_size), 0)
         gauss = cv2.resize(gauss, (col, row), interpolation=cv2.INTER_CUBIC)
         Img = Img + gauss
@@ -382,11 +371,4 @@ if __name__ == '__main__':
         bboxes = np.array(bboxes)
         write_xml_and_depth_and_grasps(os.path.join(datasets_dir, 'depth_%06d'%(start_idx + k)), objects, tasks, bboxes.astype(np.int), grasps_new)
 
-        # write_xml(os.path.join(datasets_dir, 'depth_%06d'%(start_idx + k)) + '/%06d.xml' % (start_idx + k), objects, bboxes.astype(np.int))
-        # np.save(os.path.join(datasets_dir, 'depth_%06d'%(start_idx + k), 'bboxes.npy') , bboxes.astype(np.int))
-        # write_grasps(os.path.join(datasets_dir, 'depth_%06d'%(start_idx + k)) + '/%06d.txt' % (start_idx + k), tasks, grasps_new)
-
-        # for i, grasp in enumerate(grasps_new):
-        #     for j, grasp_t in enumerate(grasp):
-        #         np.save(os.path.join(datasets_dir, 'depth_%06d'%(start_idx + k), 'grasp%d%d.npy'%(i, j)), grasp_t)
 
